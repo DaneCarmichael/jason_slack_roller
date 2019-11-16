@@ -16,7 +16,8 @@ class Message < ApplicationRecord
                [:times_rolled, '\b\d{1,3}'],
                [:sides_to_die, 'd\d*'],
                [:dropped_die, 'drop'],
-               [:attachment, '([-\+\*\\/] ?)\d*']
+               [:attachment, '([-\+\*\\/] ?)\d*'],
+               [:wild, 'wild']
              ]
 
   def roll_dice
