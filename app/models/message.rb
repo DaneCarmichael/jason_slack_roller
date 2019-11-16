@@ -44,7 +44,18 @@ class Message < ApplicationRecord
         self.body = build_roll_message(rolls, nil, dropped, wild)
       end
     else
-      self.body = build_roll_message(roll)
+      rolls = roll
+      wild = []
+      roll_params = parse_message
+      if roll_params[:wild]
+        wild_die =  rolls.shift
+        if wild_die == 6
+          wild = roll_it_out(wild_die)
+        else
+          wild = [wild_die]
+        end
+      end
+      self.body = build_roll_message(rolls, nil ,nil, wild)
     end
   end
 
