@@ -99,14 +99,20 @@ class Message < ApplicationRecord
   end
 
   def build_roll_message(rolls, attach = nil, dropped = nil, wild)
-    rolls = wild.empty? ? rolls : (wild + rolls)
     total = rolls.sum
     if attach
       total = total.public_send(attach.op, attach.mod)
     end
-    "#{self.user_name} rolls #{self.body}, resulting in"\
-    " *#{rolls.join(", ")}* for a total of"\
-    " *#{total}* #{dropped_message(dropped)} #{wild_message(wild)}"
+    if wild.empty?
+      "#{self.user_name} rolls #{self.body}, resulting in"\
+      " *#{rolls.join(", ")}* for a total of"\
+      " *#{total}* #{dropped_message(dropped)} #{wild_message(wild)}"
+    else
+      total = (wild + rolls).sum
+      "#{self.user_name} rolls #{self.body}, resulting in"\
+      " `#{wild.join(", ")}`*, #{rolls.join(", ")}* for a total of"\
+      " *#{total}* #{dropped_message(dropped)} #{wild_message(wild)}"
+    end
   end
 
   def dropped_message(dropped = nil)
