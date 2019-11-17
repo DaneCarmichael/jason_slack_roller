@@ -99,7 +99,7 @@ class Message < ApplicationRecord
   end
 
   def build_roll_message(rolls, attach = nil, dropped = nil, wild)
-    rolls = wild.empty? ? roll : (wild + rolls)
+    rolls = wild.empty? ? rolls : (wild + rolls)
     total = rolls.sum
     if attach
       total = total.public_send(attach.op, attach.mod)
