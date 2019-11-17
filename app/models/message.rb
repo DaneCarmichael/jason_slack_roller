@@ -114,7 +114,7 @@ class Message < ApplicationRecord
   end
 
   def wild_message(wild = nil)
-    "Wild die results: #{wild.join(", ")}" if wild != []
+    "Wild die results: `#{wild.join(", ")}``" if wild != []
   end
 
   def return_die_result(sides)
